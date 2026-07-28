@@ -1,6 +1,6 @@
 services:
   - type: web
-    name: lucerna-phase-one
+    name: lucerna-playground
     runtime: static
     buildCommand: npm install && npm run build
     staticPublishPath: ./out
