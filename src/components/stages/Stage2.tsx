@@ -20,8 +20,6 @@ const FEATURE_LABELS = [
   { emoji: "🧪", label: "Body: glass texture" },
   { emoji: "🔦", label: "Background: harsh glare" }
 ];
-/** One potion image per round, in order. */
-const POTION_IMAGES = ["/potion-1.webp", "/potion-2.webp", "/potion-3.webp"];
 
 export default function Stage2() {
   const { setTheme, completeStage } = useGame();
@@ -39,7 +37,7 @@ export default function Stage2() {
   return (
     <div className="space-y-4">
       <RoundHeader index={roundIdx} total={STAGE2_ROUNDS.length} title={round.title} difficulty={round.difficulty} />
-      <Stage2RoundView key={roundIdx} round={round} onClear={onClear} roundIdx={roundIdx} />
+      <Stage2RoundView key={roundIdx} round={round} onClear={onClear} />
 
       {debate && (
         <DebatePopup
@@ -71,7 +69,7 @@ export default function Stage2() {
   );
 }
 
-function Stage2RoundView({ round, onClear, roundIdx }: { round: Stage2Round; onClear: () => void; roundIdx: number }) {
+function Stage2RoundView({ round, onClear }: { round: Stage2Round; onClear: () => void }) {
   const slots = FEATURE_LABELS.slice(0, round.slotCount);
   const [filled, setFilled] = useState<(string | null)[]>(Array(round.slotCount).fill(null));
   const [armed, setArmed] = useState<string | null>(null);
@@ -123,10 +121,7 @@ function Stage2RoundView({ round, onClear, roundIdx }: { round: Stage2Round; onC
 
       <div className="grid gap-4 md:grid-cols-[1fr_260px]">
         <div className="themed rounded-xl border border-white/15 bg-black/30 p-4">
-          <div className="mb-3 flex items-center justify-center">
-            {/* eslint-disable-next-line @next/next/no-img-element */}
-            <img src={POTION_IMAGES[roundIdx]} alt="Potion" className="h-32 w-32 object-contain" />
-          </div>
+          <div className="mb-3 flex items-center justify-center text-7xl">🧪</div>
           <div className="space-y-2">
             {slots.map((s, i) => (
               <div key={i} className="flex items-center gap-3">
