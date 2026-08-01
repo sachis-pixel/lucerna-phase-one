@@ -12,8 +12,6 @@ html {
 }
 
 /* Two-phase theme matrix — Master Spec §2.4.
-   Background/text match the Lucerna Workbench sibling app exactly
-   (ink/inkSoft background, paper text, gold buttons via bg-brass).
    Adversarial Ember vs Training Sapphire carry the mode signal through
    headers, borders, gauges and glows — not the page background or buttons,
    which stay constant across both modes for brand consistency.
@@ -22,28 +20,27 @@ html {
   --theme-accent: #b8432a;
   --theme-accent-soft: rgba(184, 67, 42, 0.18);
   --theme-glow: rgba(184, 67, 42, 0.5);
-  --theme-bg-a: #191322;
-  --theme-bg-b: #241b33;
 }
 
 body.theme-red {
   --theme-accent: #b8432a;
   --theme-accent-soft: rgba(184, 67, 42, 0.18);
   --theme-glow: rgba(184, 67, 42, 0.5);
-  --theme-bg-a: #191322;
-  --theme-bg-b: #241b33;
 }
 
 body.theme-blue {
-  --theme-accent: #1d4ed8;
-  --theme-accent-soft: rgba(29, 78, 216, 0.18);
-  --theme-glow: rgba(29, 78, 216, 0.5);
-  --theme-bg-a: #191322;
-  --theme-bg-b: #241b33;
+  --theme-accent: #2f6690;
+  --theme-accent-soft: rgba(47, 102, 144, 0.18);
+  --theme-glow: rgba(47, 102, 144, 0.5);
 }
 
+/* Warm dark-magical ambient backdrop — Academy workshop lit by a hearth,
+   not a flat/neon dark mode. The parchment cards float over this. */
 body {
-  background: radial-gradient(ellipse at 50% 0%, var(--theme-bg-b), var(--theme-bg-a) 70%);
+  background:
+    radial-gradient(ellipse 900px 500px at 50% -10%, rgba(255, 167, 81, 0.16), transparent 60%),
+    radial-gradient(ellipse at 50% 0%, #3b2a1e, #1b120b 70%);
+  background-attachment: fixed;
   color: #f1ead8;
   min-height: 100vh;
   transition: background 200ms ease;
@@ -64,6 +61,20 @@ body {
 .accent-soft-bg { background-color: var(--theme-accent-soft); }
 .accent-border { border-color: var(--theme-accent); }
 .accent-glow { box-shadow: 0 0 24px var(--theme-glow); }
+
+/* Floating parchment card — the one required container shape for every
+   interaction module (Master Design Rule §3). */
+.parchment-card {
+  background: rgba(253, 248, 235, 0.97);
+  border: 1.5px solid rgba(212, 175, 55, 0.35);
+  box-shadow: 0px 20px 40px rgba(0, 0, 0, 0.4);
+  color: #3a2e2b;
+}
+
+/* Primary CTA: warm amber/orange gradient pill (Master Design Rule §1). */
+.bg-brass {
+  background-image: linear-gradient(137deg, #ffa751 0%, #ffe259 100%);
+}
 
 button:focus-visible,
 input:focus-visible {

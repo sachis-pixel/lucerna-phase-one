@@ -83,8 +83,10 @@ export default function GameShell() {
       <main className="mx-auto max-w-7xl px-4 pb-16 pt-6 sm:px-8 lg:px-12">
         <header className="mb-5 flex flex-wrap items-center justify-between gap-3">
           <div>
-            <div className="text-sm uppercase tracking-[0.3em] text-white/40">Lucerna Academy · Power One</div>
-            <h1 className="font-display text-2xl font-black tracking-wide accent-text">The Chaos Forge</h1>
+            <div className="text-sm uppercase tracking-[0.3em] text-[#F1EAD8]/60">Lucerna Academy · Power One</div>
+            <h1 className="font-display text-2xl font-black uppercase tracking-wide text-[#FFE9B8]" style={{ textShadow: "0 2px 12px rgba(0,0,0,0.5)" }}>
+              The Chaos Forge
+            </h1>
           </div>
           <div className="flex items-center gap-4">
             <StageDots current={progress.stage} done={progress.completedStages} />
@@ -97,35 +99,37 @@ export default function GameShell() {
                 window.localStorage.removeItem("lucerna_ghost_db_v1");
                 setProgress(FRESH);
               }}
-              className="text-sm uppercase tracking-wider text-white/40 underline hover:text-white"
+              className="text-sm uppercase tracking-wider text-[#F1EAD8]/50 underline hover:text-[#F1EAD8]"
             >
               Reset
             </button>
           </div>
         </header>
 
-        {outOfLives ? (
-          <div className="space-y-4">
-            <Pipp tone="warning">
-              Your alchemy health hit zero! The forge sends you back to the start of this stage. Read carefully next
-              time…
-            </Pipp>
-            <button
-              type="button"
-              onClick={restartStage}
-              className="bg-brass rounded-lg px-6 py-2.5 font-black uppercase tracking-wider text-ink hover:brightness-110"
-            >
-              Restart stage
-            </button>
-          </div>
-        ) : (
-          <>
-            {progress.stage === 1 && <Stage1 />}
-            {progress.stage === 2 && <Stage2 />}
-            {progress.stage === 3 && <Stage3 />}
-            {progress.stage === 4 && <Stage4 />}
-          </>
-        )}
+        <div className="parchment-card rounded-3xl p-4 sm:p-6">
+          {outOfLives ? (
+            <div className="space-y-4">
+              <Pipp tone="warning">
+                Your alchemy health hit zero! The forge sends you back to the start of this stage. Read carefully next
+                time…
+              </Pipp>
+              <button
+                type="button"
+                onClick={restartStage}
+                className="bg-brass rounded-full px-6 py-2.5 font-black uppercase tracking-wider text-ink hover:brightness-110"
+              >
+                Restart stage
+              </button>
+            </div>
+          ) : (
+            <>
+              {progress.stage === 1 && <Stage1 />}
+              {progress.stage === 2 && <Stage2 />}
+              {progress.stage === 3 && <Stage3 />}
+              {progress.stage === 4 && <Stage4 />}
+            </>
+          )}
+        </div>
       </main>
     </Ctx.Provider>
   );
@@ -138,7 +142,7 @@ function StageDots({ current, done }: { current: number; done: number[] }) {
         <span
           key={s}
           className={`h-2.5 w-2.5 rounded-full ${
-            done.includes(s) ? "bg-brass" : s === current ? "accent-bg animate-pulseglow" : "bg-white/15"
+            done.includes(s) ? "bg-brass" : s === current ? "accent-bg animate-pulseglow" : "bg-[#F1EAD8]/20"
           }`}
         />
       ))}

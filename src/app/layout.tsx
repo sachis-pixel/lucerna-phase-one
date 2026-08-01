@@ -1,10 +1,11 @@
 import type { Metadata } from "next";
-import { Fraunces, IBM_Plex_Sans, IBM_Plex_Mono } from "next/font/google";
+import { Cinzel, Quicksand, IBM_Plex_Mono } from "next/font/google";
 import "./globals.css";
 
-// Matches the Lucerna Workbench sibling app's type system.
-const fraunces = Fraunces({ subsets: ["latin"], weight: ["500", "600"], variable: "--font-display" });
-const plexSans = IBM_Plex_Sans({ subsets: ["latin"], weight: ["400", "500", "600"], variable: "--font-body" });
+// Lucerna Academy type system: classical serif for chapter/header voice,
+// rounded child-friendly sans for body and dialogue.
+const cinzel = Cinzel({ subsets: ["latin"], weight: ["500", "600", "700"], variable: "--font-display" });
+const quicksand = Quicksand({ subsets: ["latin"], weight: ["400", "500", "600", "700"], variable: "--font-body" });
 const plexMono = IBM_Plex_Mono({ subsets: ["latin"], weight: ["400", "500"], variable: "--font-mono" });
 
 export const metadata: Metadata = {
@@ -14,7 +15,7 @@ export const metadata: Metadata = {
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="en" className={`${fraunces.variable} ${plexSans.variable} ${plexMono.variable}`}>
+    <html lang="en" className={`${cinzel.variable} ${quicksand.variable} ${plexMono.variable}`}>
       <body className="theme-red themed font-rune antialiased">{children}</body>
     </html>
   );

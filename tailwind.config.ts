@@ -5,16 +5,25 @@ const config: Config = {
   theme: {
     extend: {
       colors: {
-        // Named to match the Lucerna Workbench sibling app's design tokens.
-        ink: "#191322",
-        alert: "#B8432A", // ember
-        guardian: "#4C7A5E", // verdant
-        parchment: "#F1EAD8", // paper
-        arcane: "#241B33", // inkSoft
-        brass: "#D9A441" // gold
+        // Lucerna Academy warm-parchment identity: cream cards floating over a
+        // candlelit workshop backdrop, gold trim, amber CTAs.
+        ink: "#2D231E", // deep bronze/charcoal — headers + text on gold surfaces
+        umber: "#5A4E4A", // muted warm brown — body text
+        alert: "#B8432A", // ember — wrong/danger accent
+        guardian: "#4C7A5E", // verdant — correct/safe accent
+        parchment: "#FDF8EB", // warm cream card surface
+        sand: "#F3E7CE", // nested panel surface (on top of parchment)
+        sandDeep: "#EADFC0", // deeper nested panel / active state
+        arcane: "#3B2A1E", // ambient workshop backdrop, upper glow
+        hearth: "#1B120B", // ambient workshop backdrop, base
+        tan: "#E2D5B7", // warm inset border for nested panels
+        brass: "#D9A441" // gold trim / border accent
+      },
+      backgroundImage: {
+        "brass-gradient": "linear-gradient(137deg, #FFA751 0%, #FFE259 100%)"
       },
       fontFamily: {
-        display: ["var(--font-display)", "Georgia", "serif"],
+        display: ["var(--font-display)", "Cinzel", "Georgia", "serif"],
         rune: ["var(--font-body)", "ui-sans-serif", "system-ui", "sans-serif"],
         mono: ["var(--font-mono)", "ui-monospace", "monospace"]
       },

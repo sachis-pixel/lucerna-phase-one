@@ -68,7 +68,7 @@ function ContinueButton({ onClick, label }: { onClick: () => void; label: string
     <button
       type="button"
       onClick={onClick}
-      className="bg-brass mt-3 flex items-center gap-2 rounded-lg px-5 py-2.5 text-sm font-black uppercase tracking-wider text-ink hover:brightness-110"
+      className="bg-brass mt-3 flex items-center gap-2 rounded-full px-5 py-2.5 text-sm font-black uppercase tracking-wider text-ink hover:brightness-110"
     >
       {label}
       <span className="animate-floaty">👉</span>
@@ -180,26 +180,26 @@ function Stage1RoundView({ round, onClear, isLastRound }: { round: Stage1Round; 
         <div className="animate-revealIn space-y-4">
           {/* Guards + the gate they're blocking */}
           <div className="grid gap-3 md:grid-cols-3">
-            <div className="themed rounded-xl border border-white/15 bg-black/30 p-3">
+            <div className="themed rounded-xl border border-tan bg-sand p-3">
               <div className="animate-popIn h-24 w-24 overflow-hidden rounded-lg">
                 {/* eslint-disable-next-line @next/next/no-img-element */}
                 <img src="/stone-gargoyle.webp" alt="Stone Gargoyle" className="h-full w-full object-cover" />
               </div>
-              <div className="mt-1 text-xs font-black uppercase tracking-wider">Stone Gargoyle · Rule Engine</div>
+              <div className="mt-1 text-xs font-black uppercase tracking-wider text-ink">Stone Gargoyle · Rule Engine</div>
               <div className="mt-2 space-y-1">
                 {round.ruleChecks.map((r) => (
-                  <div key={r.key} className={`text-sm font-bold ${(odds[r.key] ?? 0) >= 1 ? "text-green-400" : "text-alert"}`}>
+                  <div key={r.key} className={`text-sm font-bold ${(odds[r.key] ?? 0) >= 1 ? "text-guardian" : "text-alert"}`}>
                     {(odds[r.key] ?? 0) >= 1 ? "✓" : "✗"} {r.label}
                   </div>
                 ))}
               </div>
             </div>
-            <div className="themed rounded-xl border border-white/15 bg-black/30 p-3">
-              <div className="animate-popIn h-24 w-24 overflow-hidden rounded-lg border border-white/20">
+            <div className="themed rounded-xl border border-tan bg-sand p-3">
+              <div className="animate-popIn h-24 w-24 overflow-hidden rounded-lg border border-tan">
                 {/* eslint-disable-next-line @next/next/no-img-element */}
                 <img src="/ai-guard.webp" alt="AI Crystal Beast" className="h-full w-full object-cover object-[68%_18%]" />
               </div>
-              <div className="mt-1 text-xs font-black uppercase tracking-wider">AI Crystal Beast · Vision Model</div>
+              <div className="mt-1 text-xs font-black uppercase tracking-wider text-ink">AI Crystal Beast · Vision Model</div>
               <div className="mt-2 space-y-2">
                 {round.features.map((f) => (
                   <Gauge key={f.key} label={f.label} value={odds[f.key] ?? 0} mode="blood" threshold={round.featureThreshold} />
@@ -207,12 +207,12 @@ function Stage1RoundView({ round, onClear, isLastRound }: { round: Stage1Round; 
               </div>
             </div>
             <div className="themed flex flex-col items-center justify-center rounded-xl border-2 accent-border accent-soft-bg p-3 text-center">
-              <div className="animate-popIn h-24 w-24 overflow-hidden rounded-lg border border-white/20">
+              <div className="animate-popIn h-24 w-24 overflow-hidden rounded-lg border border-tan">
                 {/* eslint-disable-next-line @next/next/no-img-element */}
                 <img src="/gate.webp" alt="The Gate" className="h-full w-full object-cover object-[61%_45%]" />
               </div>
               <div className="mt-1 text-xs font-black uppercase tracking-wider accent-text">The Gate</div>
-              <div className="mt-1 text-sm text-white/70">Beat both guards, then walk through</div>
+              <div className="mt-1 text-sm text-umber">Beat both guards, then walk through</div>
             </div>
           </div>
           {revealStep === 2 && <ContinueButton label="Let's play! 🎮" onClick={() => setRevealStep(3)} />}
@@ -223,7 +223,7 @@ function Stage1RoundView({ round, onClear, isLastRound }: { round: Stage1Round; 
       <div className="animate-revealIn space-y-4">
       {/* Fusion circle (only when the round is the classic badge+cloak round) */}
       {usesFusion && equipped.length === 0 && (
-        <div className="themed rounded-xl border border-white/15 bg-black/30 p-4">
+        <div className="themed rounded-xl border border-tan bg-sand p-4">
           <div className="mb-2 text-xs font-black uppercase tracking-wider accent-text">⚗️ Local Alchemy Circle</div>
           <div className="flex flex-wrap items-center gap-3">
             <DropSocket label="Item A" tokenId={slotA} tokens={round.backpack} onDropToken={(id) => { setSlotA(id); dispatchPoe({ type: "SOCKET_CHANGED" }); }} onEmptyClick={() => { if (armed) { setSlotA(armed); setArmed(null); dispatchPoe({ type: "SOCKET_CHANGED" }); } }} onEject={() => { setSlotA(null); dispatchPoe({ type: "SOCKET_CHANGED" }); }} />
@@ -252,7 +252,7 @@ function Stage1RoundView({ round, onClear, isLastRound }: { round: Stage1Round; 
 
       {/* Backpack (equip toggles) */}
       <div>
-        <div className="mb-2 text-xs font-black uppercase tracking-wider text-white/50">
+        <div className="mb-2 text-xs font-black uppercase tracking-wider text-umber/70">
           🎒 Backpack — {round.hideWeights ? "effects hidden! equip to probe" : "click to equip / unequip"}
         </div>
         <div className="flex flex-wrap gap-2">
@@ -260,13 +260,13 @@ function Stage1RoundView({ round, onClear, isLastRound }: { round: Stage1Round; 
             <div key={t.id} className="flex flex-col items-center">
               <TokenCard token={t} selected={equipped.includes(t.id) || armed === t.id} onSelect={usesFusion && equipped.length === 0 ? (id) => setArmed((a) => (a === id ? null : id)) : toggleEquip} />
               {round.hideWeights && (
-                <div className="mt-1 text-sm text-white/40">{probed[t.id] ? "revealed" : "❓ unknown"}</div>
+                <div className="mt-1 text-sm text-umber/60">{probed[t.id] ? "revealed" : "❓ unknown"}</div>
               )}
             </div>
           ))}
         </div>
         {usesFusion && armed && equipped.length === 0 && (
-          <div className="mt-2 text-sm text-white/50">Picked up {round.backpack.find((t) => t.id === armed)?.name} — click Item A or Item B.</div>
+          <div className="mt-2 text-sm text-umber/70">Picked up {round.backpack.find((t) => t.id === armed)?.name} — click Item A or Item B.</div>
         )}
       </div>
 
@@ -293,17 +293,17 @@ function Stage1RoundView({ round, onClear, isLastRound }: { round: Stage1Round; 
               autoPlay
               muted
               playsInline
-              className="animate-revealIn w-full rounded-lg border border-white/15"
+              className="animate-revealIn w-full rounded-lg border border-tan"
             />
           ) : (
             <div className="text-4xl">🎉</div>
           )}
-          <h2 className="mt-2 font-display text-xl font-black accent-text">Round cleared!</h2>
-          <p className="mt-2 text-sm leading-relaxed">
+          <h2 className="mt-2 font-display text-xl font-black uppercase tracking-wide accent-text">Round cleared!</h2>
+          <p className="mt-2 text-sm leading-relaxed text-umber">
             You beat both guards! The rule matched, and every AI bar dropped under the line.
             {round.hideWeights && " You also figured out the hidden items just by testing them — that's how people study an AI they can't see inside."}
           </p>
-          <button type="button" onClick={onClear} className="bg-brass mt-4 rounded-lg px-6 py-2.5 font-black uppercase tracking-wider text-ink hover:brightness-110">
+          <button type="button" onClick={onClear} className="bg-brass mt-4 rounded-full px-6 py-2.5 font-black uppercase tracking-wider text-ink hover:brightness-110">
             Continue →
           </button>
         </Modal>

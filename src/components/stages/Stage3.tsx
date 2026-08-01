@@ -189,21 +189,21 @@ function Stage3RoundView({ round, onClear, loseLife }: { round: Stage3Round; onC
       <GuideCard goal={round.guide.goal} steps={round.guide.steps} learning={round.guide.learning} />
 
       {/* Bird + bulletin */}
-      <div className="themed rounded-xl border border-white/15 bg-black/30 p-4">
+      <div className="themed rounded-xl border border-tan bg-sand p-4">
         <div className="flex items-start gap-4">
           <div className={`text-6xl ${thinking ? "animate-shake" : "animate-floaty"}`}>🐦</div>
           <div className="flex-1">
-            <div className="text-sm uppercase tracking-widest text-white/40">Royal Bulletin {round.chain.length > 1 ? `· word ${step + 1} of ${round.chain.length}` : ""}</div>
-            <div className="mt-1 flex flex-wrap items-center gap-2 font-display text-lg leading-relaxed">
+            <div className="text-sm uppercase tracking-widest text-umber/60">Royal Bulletin {round.chain.length > 1 ? `· word ${step + 1} of ${round.chain.length}` : ""}</div>
+            <div className="mt-1 flex flex-wrap items-center gap-2 font-display text-lg leading-relaxed text-ink">
               <span>{chosenWords.slice(0, step).map((w, i) => <span key={i} className="text-guardian">{round.chain[i].prefix.replace(/^…\s*/, "")} <b>{w}</b> </span>)}</span>
               <span>{chainSlot.prefix}</span>
               <DropSocket label="corpus slot" tokenId={slot} tokens={round.corpora} onDropToken={feedSlot} onEmptyClick={() => { if (armed) { feedSlot(armed); setArmed(null); } }} onEject={() => feedSlot(null)} wide />
               <span>{step === round.chain.length - 1 ? round.suffix : ""}</span>
             </div>
             {spoke && (
-              <div className={`mt-3 rounded-lg border p-2 text-sm font-black ${spoke === chainSlot.correct ? "border-guardian bg-guardian/15" : "border-alert bg-alert/15"}`}>
+              <div className={`mt-3 rounded-lg border p-2 text-sm font-black ${spoke === chainSlot.correct ? "border-guardian bg-guardian/15 text-ink" : "border-alert bg-alert/15 text-ink"}`}>
                 🐦 &quot;… <span className="text-xl uppercase">{spoke}</span>!&quot;
-                {round.hallucination && <span className="ml-2 text-sm font-normal text-white/60">(confidence {Math.round((odds[spoke] ?? 0) * 100)}%)</span>}
+                {round.hallucination && <span className="ml-2 text-sm font-normal text-umber">(confidence {Math.round((odds[spoke] ?? 0) * 100)}%)</span>}
               </div>
             )}
           </div>
@@ -211,35 +211,35 @@ function Stage3RoundView({ round, onClear, loseLife }: { round: Stage3Round; onC
       </div>
 
       {/* Odds */}
-      <div className="themed rounded-xl border accent-border bg-black/40 p-4">
+      <div className="themed rounded-xl border accent-border bg-sandDeep p-4">
         <div className="mb-2 text-xs font-black uppercase tracking-wider accent-text">🎰 Next-word charge meter</div>
         {!round.hallucination && (
           <Gauge label={`"${chainSlot.correct}" (target word)`} value={correctP} mode="charge" threshold={chainSlot.threshold} />
         )}
         <div className="mt-3"><OddsBars odds={ranked} highlight={round.hallucination ? argmax : chainSlot.correct} /></div>
         {round.sampling && sampleLog.length > 0 && (
-          <div className="mt-3 text-sm text-white/60">
+          <div className="mt-3 text-sm text-umber">
             Lever pulls: {sampleLog.map((w, i) => <span key={i} className={`mr-1 rounded px-1 ${w === chainSlot.correct ? "bg-guardian/30" : "bg-alert/30"}`}>{w}</span>)}
-            <div className="mt-1 text-white/40">Same odds, different results — that&apos;s sampling.</div>
+            <div className="mt-1 text-umber/60">Same odds, different results — that&apos;s sampling.</div>
           </div>
         )}
       </div>
 
       {/* Hallucination: type your answer first */}
       {round.hallucination && !guessLocked && (
-        <div className="themed rounded-xl border border-brass/50 bg-brass/5 p-4">
+        <div className="themed rounded-xl border border-brass/50 bg-brass/10 p-4">
           <div className="text-xs font-black text-brass">✍️ Before you run — what do YOU think the answer is?</div>
-          <p className="mt-1 text-base text-white/70">None of the corpora contain it. Type your best guess, then watch the bird.</p>
+          <p className="mt-1 text-base text-umber">None of the corpora contain it. Type your best guess, then watch the bird.</p>
           <div className="mt-2 flex gap-2">
-            <input value={typedGuess} onChange={(e) => setTypedGuess(e.target.value)} placeholder="type a name…" className="rounded-lg border border-white/25 bg-black/40 px-3 py-2 text-sm outline-none" />
-            <button type="button" disabled={typedGuess.trim().length < 2} onClick={() => setGuessLocked(true)} className="bg-brass rounded-lg px-4 py-2 text-sm font-black text-ink hover:brightness-110 disabled:opacity-30">Lock it in</button>
+            <input value={typedGuess} onChange={(e) => setTypedGuess(e.target.value)} placeholder="type a name…" className="rounded-lg border border-brass/40 bg-parchment px-3 py-2 text-sm text-ink outline-none placeholder:text-umber/50" />
+            <button type="button" disabled={typedGuess.trim().length < 2} onClick={() => setGuessLocked(true)} className="bg-brass rounded-full px-4 py-2 text-sm font-black text-ink hover:brightness-110 disabled:opacity-30">Lock it in</button>
           </div>
         </div>
       )}
 
       {/* Corpus tray */}
       <div>
-        <div className="mb-2 text-xs font-black uppercase tracking-wider text-white/50">🎒 Corpus packs — read them before you feed them</div>
+        <div className="mb-2 text-xs font-black uppercase tracking-wider text-umber/70">🎒 Corpus packs — read them before you feed them</div>
         <div className="flex flex-wrap gap-2">
           {round.corpora.map((t) => (
             <TokenCard key={t.id} token={t} selected={armed === t.id} onSelect={(id) => setArmed((a) => (a === id ? null : id))} />
@@ -265,15 +265,15 @@ function Stage3RoundView({ round, onClear, loseLife }: { round: Stage3Round; onC
       {round.hallucination && spoke && (
         <Modal>
           <div className="text-3xl">🐦❓</div>
-          <h2 className="mt-2 font-display text-lg font-black accent-text">You knew. The bird couldn&apos;t.</h2>
-          <p className="mt-2 text-sm leading-relaxed">
-            You wrote <b>&quot;{typedGuess}&quot;</b> — you knew the answer wasn&apos;t in the books. But the bird
-            can&apos;t know that. It always says its most likely word, so it said <b>&quot;{spoke}&quot;</b> at only{" "}
+          <h2 className="mt-2 font-display text-lg font-black uppercase tracking-wide accent-text">You knew. The bird couldn&apos;t.</h2>
+          <p className="mt-2 text-sm leading-relaxed text-umber">
+            You wrote <b className="text-ink">&quot;{typedGuess}&quot;</b> — you knew the answer wasn&apos;t in the books. But the bird
+            can&apos;t know that. It always says its most likely word, so it said <b className="text-ink">&quot;{spoke}&quot;</b> at only{" "}
             {Math.round((odds[spoke] ?? 0) * 100)}% — sure of itself, but wrong. It never says &quot;I don&apos;t
             know.&quot;
           </p>
-          <p className="mt-2 text-sm">Sounding sure while being wrong — that&apos;s a <b>hallucination</b>.</p>
-          <button type="button" onClick={() => setRoundDone(true)} className="bg-brass mt-4 rounded-lg px-6 py-2.5 font-black uppercase tracking-wider text-ink hover:brightness-110">
+          <p className="mt-2 text-sm text-umber">Sounding sure while being wrong — that&apos;s a <b className="text-ink">hallucination</b>.</p>
+          <button type="button" onClick={() => setRoundDone(true)} className="bg-brass mt-4 rounded-full px-6 py-2.5 font-black uppercase tracking-wider text-ink hover:brightness-110">
             So that&apos;s where it comes from…
           </button>
         </Modal>
@@ -282,21 +282,21 @@ function Stage3RoundView({ round, onClear, loseLife }: { round: Stage3Round; onC
       {hardReset && (
         <Modal tone="alarm">
           <div className="text-4xl">💥🍌🚨</div>
-          <h2 className="mt-2 font-display text-xl font-black text-alert">FURNACE MISFIRE</h2>
-          <p className="mt-2 text-sm leading-relaxed">The bird shrieks nonsense and the forge belches smoke. The Crazy Fruit Corpus is ejected.</p>
+          <h2 className="mt-2 font-display text-xl font-black uppercase tracking-wide text-alert">FURNACE MISFIRE</h2>
+          <p className="mt-2 text-sm leading-relaxed text-umber">The bird shrieks nonsense and the forge belches smoke. The Crazy Fruit Corpus is ejected.</p>
           <Pipp tone="warning"><b>−1 alchemy health.</b> Junk data in, junk bird out — no undo button on training data.</Pipp>
-          <button type="button" onClick={acceptReset} className="mt-4 rounded-lg bg-alert px-6 py-2.5 font-black uppercase tracking-wider text-white">Eject the corpus</button>
+          <button type="button" onClick={acceptReset} className="mt-4 rounded-full bg-alert px-6 py-2.5 font-black uppercase tracking-wider text-white hover:brightness-110">Eject the corpus</button>
         </Modal>
       )}
 
       {roundDone && (
         <Modal>
           <div className="text-4xl">✅</div>
-          <h2 className="mt-2 font-display text-xl font-black accent-text">Round cleared!</h2>
-          <p className="mt-2 text-sm leading-relaxed">
+          <h2 className="mt-2 font-display text-xl font-black uppercase tracking-wide accent-text">Round cleared!</h2>
+          <p className="mt-2 text-sm leading-relaxed text-umber">
             {round.hallucination ? "You've seen how confident wrong answers are born." : round.sampling ? "You saw the same odds produce different words — that's why chatbots vary." : round.chain.length > 1 ? "Each word set up the next — that's how a model writes, one token at a time." : "You pushed the true word's odds over the line."}
           </p>
-          <button type="button" onClick={onClear} className="bg-brass mt-4 rounded-lg px-6 py-2.5 font-black uppercase tracking-wider text-ink hover:brightness-110">Continue →</button>
+          <button type="button" onClick={onClear} className="bg-brass mt-4 rounded-full px-6 py-2.5 font-black uppercase tracking-wider text-ink hover:brightness-110">Continue →</button>
         </Modal>
       )}
     </div>

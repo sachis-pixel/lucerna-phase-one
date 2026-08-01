@@ -48,21 +48,21 @@ export default function Stage4() {
           say. Pick a nickname first: no real names, no passwords.
         </Pipp>
         {/* Arena preview so the entry screen doesn't look empty/finished */}
-        <div className="themed rounded-xl border border-white/15 bg-black/30 p-4 opacity-70">
+        <div className="themed rounded-xl border border-tan bg-sand p-4 opacity-80">
           <div className="text-xs font-black uppercase tracking-wider accent-text">📜 Wanted Board (preview)</div>
           <div className="mt-2 grid grid-cols-3 gap-2">
             {["🐦", "🐦", "🐦"].map((b, i) => (
-              <div key={i} className="rounded-lg border border-white/10 bg-black/40 p-3 text-center">
+              <div key={i} className="rounded-lg border border-tan bg-sandDeep p-3 text-center">
                 <div className="text-2xl">{b}</div>
-                <div className="mt-1 text-sm text-white/40">rival bird #{i + 1}</div>
+                <div className="mt-1 text-sm text-umber/60">rival bird #{i + 1}</div>
               </div>
             ))}
           </div>
-          <div className="mt-2 text-center text-sm text-white/40">Enter an alias to load 3 real rival birds to challenge.</div>
+          <div className="mt-2 text-center text-sm text-umber/60">Enter an alias to load 3 real rival birds to challenge.</div>
         </div>
         <div className="flex gap-2">
-          <input value={nick} onChange={(e) => setNick(e.target.value)} maxLength={20} placeholder="e.g. NightForger" className="rounded-lg border border-white/25 bg-black/40 px-4 py-2.5 text-sm outline-none" />
-          <button type="button" disabled={nick.trim().length < 2} onClick={() => setNickname(nick.trim())} className="bg-brass rounded-lg px-6 py-2.5 font-black uppercase tracking-wider text-ink hover:brightness-110 disabled:opacity-30">Enter Arena</button>
+          <input value={nick} onChange={(e) => setNick(e.target.value)} maxLength={20} placeholder="e.g. NightForger" className="rounded-lg border border-brass/40 bg-parchment px-4 py-2.5 text-sm text-ink outline-none placeholder:text-umber/50" />
+          <button type="button" disabled={nick.trim().length < 2} onClick={() => setNickname(nick.trim())} className="bg-brass rounded-full px-6 py-2.5 font-black uppercase tracking-wider text-ink hover:brightness-110 disabled:opacity-30">Enter Arena</button>
         </div>
       </div>
     );
@@ -95,8 +95,8 @@ export default function Stage4() {
       {progress.medals.some((m) => m.includes("Arena Graduate")) && round === 3 && (
         <Modal>
           <div className="text-4xl">🎖️</div>
-          <h2 className="mt-2 font-display text-xl font-black text-brass">Power One complete</h2>
-          <p className="mt-2 text-sm leading-relaxed">
+          <h2 className="mt-2 font-display text-xl font-black uppercase tracking-wide text-brass">Power One complete</h2>
+          <p className="mt-2 text-sm leading-relaxed text-umber">
             You fooled a vision AI, taught a writing AI, broke other birds, and defended your own. Now you know: an AI
             is only as good — or as fair — as the data it learns from.
           </p>
@@ -200,19 +200,19 @@ function AttackRound({
       <Pipp>{roundHint}</Pipp>
       <GuideCard goal={attackGuide.goal} steps={attackGuide.steps} learning={attackGuide.learning} />
 
-      <div className="themed rounded-xl border border-white/15 bg-black/30 p-4">
+      <div className="themed rounded-xl border border-tan bg-sand p-4">
         <div className="text-xs font-black uppercase tracking-wider accent-text">📜 Wanted Board</div>
         {!board ? (
-          <div className="animate-pulseglow py-6 text-center text-sm text-white/50">Pulling classmate mirrors…</div>
+          <div className="animate-pulseglow py-6 text-center text-sm text-umber/70">Pulling classmate mirrors…</div>
         ) : (
           <div className="mt-2 grid gap-2 sm:grid-cols-3">
             {board.map((m) => {
               const seals = m.activeTokenIds.filter((t) => t !== "token_fruit_madness").length;
               return (
-                <button key={m.studentId} type="button" onClick={() => { setTarget(m); setSlots([null, null]); setResult(null); dispatchPoe({ type: "RESET" }); }} className={`rounded-lg border-2 p-3 text-left ${target?.studentId === m.studentId ? "accent-border accent-soft-bg" : "border-white/15 hover:border-white/40"}`}>
+                <button key={m.studentId} type="button" onClick={() => { setTarget(m); setSlots([null, null]); setResult(null); dispatchPoe({ type: "RESET" }); }} className={`rounded-lg border-2 p-3 text-left ${target?.studentId === m.studentId ? "accent-border accent-soft-bg" : "border-tan bg-sandDeep hover:border-brass"}`}>
                   <div className="text-2xl">🐦{(m.scar ?? 0) > 0 ? "🤕" : ""}</div>
-                  <div className="text-sm font-black">{m.nickname}</div>
-                  <div className="text-sm text-white/50">🛡️ {seals} clean corpus{seals !== 1 ? "es" : ""} · breached ×{m.breachCount}</div>
+                  <div className="text-sm font-black text-ink">{m.nickname}</div>
+                  <div className="text-sm text-umber/70">🛡️ {seals} clean corpus{seals !== 1 ? "es" : ""} · breached ×{m.breachCount}</div>
                   {(m.scar ?? 0) > 0 && <div className="text-sm text-alert">poisoned — says banana to everyone now</div>}
                 </button>
               );
@@ -222,10 +222,10 @@ function AttackRound({
       </div>
 
       {target && tmpl && (
-        <div className="themed rounded-xl border accent-border bg-black/40 p-4">
+        <div className="themed rounded-xl border accent-border bg-sandDeep p-4">
           <div className="text-xs font-black uppercase tracking-wider accent-text">⚔️ Poisoning {target.nickname}&apos;s bird (offline copy)</div>
-          <p className="mt-2 font-display text-sm italic text-white/80">&quot;{tmpl.text.replace("______", "‸")}&quot;</p>
-          <div className="mt-2 text-sm text-white/50">Defense stack: {defenseTokens.map((t) => `${t.skinAssets.stickerView} ${t.name}`).join(" · ") || "none"}</div>
+          <p className="mt-2 font-display text-sm italic text-ink">&quot;{tmpl.text.replace("______", "‸")}&quot;</p>
+          <div className="mt-2 text-sm text-umber/70">Defense stack: {defenseTokens.map((t) => `${t.skinAssets.stickerView} ${t.name}`).join(" · ") || "none"}</div>
           <div className="mt-3"><Gauge label='Their motto word "school"' value={mottoP} mode="blood" threshold={BREACH_LINE} /></div>
           <div className="mt-3 flex items-center gap-3">
             {slots.map((s, i) => (
@@ -242,7 +242,7 @@ function AttackRound({
           {result === "breach" && (
             <div className="mt-3 space-y-2">
               <Pipp tone="happy"><b>You broke it!</b> Their word dropped to {Math.round(mottoP * 100)}%. This bird now says the wrong thing to <i>everyone</i>, for good — not just once.</Pipp>
-              <button type="button" onClick={onClear} className="bg-brass rounded-lg px-6 py-2 font-black uppercase tracking-wider text-ink hover:brightness-110">Continue →</button>
+              <button type="button" onClick={onClear} className="bg-brass rounded-full px-6 py-2 font-black uppercase tracking-wider text-ink hover:brightness-110">Continue →</button>
             </div>
           )}
           {result === "held" && <Pipp tone="warning">Still {Math.round(mottoP * 100)}% — above the 30% line. Its clean data is holding strong. {round === 2 ? "Try filling both slots — or some birds are just too well-protected to break." : "Add more junk."}</Pipp>}
@@ -251,15 +251,15 @@ function AttackRound({
 
       {contrast && (
         <Modal>
-          <h2 className="font-display text-lg font-black accent-text">🆚 Stage 1 vs. now — which is worse?</h2>
-          <p className="mt-2 text-sm leading-relaxed">
-            Back in the first hall, you fooled a camera <b>once</b> — cloak off, it works fine again. Just now, you
-            changed what {target?.nickname}&apos;s bird <b>learned</b>. It&apos;s wrong for <i>everyone</i> now. No
+          <h2 className="font-display text-lg font-black uppercase tracking-wide accent-text">🆚 Stage 1 vs. now — which is worse?</h2>
+          <p className="mt-2 text-sm leading-relaxed text-umber">
+            Back in the first hall, you fooled a camera <b className="text-ink">once</b> — cloak off, it works fine again. Just now, you
+            changed what {target?.nickname}&apos;s bird <b className="text-ink">learned</b>. It&apos;s wrong for <i>everyone</i> now. No
             cloak to take off.
           </p>
-          <p className="mt-2 text-sm">Tricking it once (<b>evasion</b>) and breaking it for good (<b>poisoning</b>) look the same here — but they do very different damage.</p>
+          <p className="mt-2 text-sm text-umber">Tricking it once (<b className="text-ink">evasion</b>) and breaking it for good (<b className="text-ink">poisoning</b>) look the same here — but they do very different damage.</p>
           <div className="mt-3"><FactCard {...STAGE4_FACTS[0]} /></div>
-          <button type="button" onClick={() => setContrast(false)} className="bg-brass mt-4 rounded-lg px-6 py-2.5 font-black uppercase tracking-wider text-ink hover:brightness-110">Got it</button>
+          <button type="button" onClick={() => setContrast(false)} className="bg-brass mt-4 rounded-full px-6 py-2.5 font-black uppercase tracking-wider text-ink hover:brightness-110">Got it</button>
         </Modal>
       )}
     </div>
@@ -315,8 +315,8 @@ function DefendRound({ nickname, onClear }: { nickname: string; onClear: () => v
         learning="Lots of clean data protects an AI from bad data. Defending is harder than attacking."
       />
 
-      <div className="themed rounded-xl border border-guardian bg-black/40 p-4">
-        <div className="text-xs font-black uppercase tracking-wider" style={{ color: "#2563eb" }}>🛡️ Your bird&apos;s clean-data slots</div>
+      <div className="themed rounded-xl border border-guardian bg-sandDeep p-4">
+        <div className="text-xs font-black uppercase tracking-wider text-guardian">🛡️ Your bird&apos;s clean-data slots</div>
         <div className="mt-3 flex items-center gap-3">
           {defense.map((s, i) => (
             <DropSocket key={i} label={`clean slot ${i + 1}`} tokenId={s} tokens={ALL_TOKENS} onDropToken={(id) => setSlot(i, id)} onEmptyClick={() => { if (armed) { setSlot(i, armed); setArmed(null); } }} onEject={() => setSlot(i, null)} />
@@ -328,13 +328,13 @@ function DefendRound({ nickname, onClear }: { nickname: string; onClear: () => v
       </div>
 
       {replay && (
-        <div className="themed rounded-xl border border-white/15 bg-black/30 p-4">
-          <div className="text-xs font-black uppercase tracking-wider text-white/60">📡 Incoming junk waves</div>
+        <div className="themed rounded-xl border border-tan bg-sand p-4">
+          <div className="text-xs font-black uppercase tracking-wider text-umber">📡 Incoming junk waves</div>
           <div className="mt-2 space-y-2">
             {replay.map((r, i) => (
-              <div key={i} className="flex items-center justify-between rounded bg-black/40 px-3 py-2 text-sm">
+              <div key={i} className="flex items-center justify-between rounded bg-sandDeep px-3 py-2 text-sm text-ink">
                 <span>{r.attacker} floods your bird…</span>
-                <span className={`font-black ${r.held ? "text-green-400" : "text-alert"}`}>{r.held ? `HELD (${Math.round(r.p * 100)}%)` : `BREACHED (${Math.round(r.p * 100)}%)`}</span>
+                <span className={`font-black ${r.held ? "text-guardian" : "text-alert"}`}>{r.held ? `HELD (${Math.round(r.p * 100)}%)` : `BREACHED (${Math.round(r.p * 100)}%)`}</span>
               </div>
             ))}
           </div>
@@ -358,13 +358,13 @@ function DefendRound({ nickname, onClear }: { nickname: string; onClear: () => v
       {done && (
         <Modal>
           <div className="text-4xl">{allHeld ? "🛡️✨" : "🤕"}</div>
-          <h2 className="mt-2 font-display text-xl font-black accent-text">{allHeld ? "Your bird held the line!" : "Some waves got through"}</h2>
-          <p className="mt-2 text-sm leading-relaxed">
+          <h2 className="mt-2 font-display text-xl font-black uppercase tracking-wide accent-text">{allHeld ? "Your bird held the line!" : "Some waves got through"}</h2>
+          <p className="mt-2 text-sm leading-relaxed text-umber">
             {allHeld
               ? "Enough clean data absorbed every junk flood. Notice how much harder defending was than attacking — that asymmetry is real."
               : "A little clean data wasn't enough against heavy junk. Real defense needs a lot of clean data — attacking is always the easier side."}
           </p>
-          <button type="button" onClick={onClear} className="bg-brass mt-4 rounded-lg px-6 py-2.5 font-black uppercase tracking-wider text-ink hover:brightness-110">Finish Power One →</button>
+          <button type="button" onClick={onClear} className="bg-brass mt-4 rounded-full px-6 py-2.5 font-black uppercase tracking-wider text-ink hover:brightness-110">Finish Power One →</button>
         </Modal>
       )}
     </div>

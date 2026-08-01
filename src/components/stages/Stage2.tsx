@@ -120,12 +120,12 @@ function Stage2RoundView({ round, onClear }: { round: Stage2Round; onClear: () =
       <GuideCard goal={round.guide.goal} steps={round.guide.steps} learning={round.guide.learning} />
 
       <div className="grid gap-4 md:grid-cols-[1fr_260px]">
-        <div className="themed rounded-xl border border-white/15 bg-black/30 p-4">
+        <div className="themed rounded-xl border border-tan bg-sand p-4">
           <div className="mb-3 flex items-center justify-center text-7xl">🧪</div>
           <div className="space-y-2">
             {slots.map((s, i) => (
               <div key={i} className="flex items-center gap-3">
-                <div className="w-48 text-sm text-white/60">{s.emoji} {s.label}</div>
+                <div className="w-48 text-sm text-umber">{s.emoji} {s.label}</div>
                 <DropSocket
                   label="rune slot"
                   tokenId={filled[i]}
@@ -140,12 +140,12 @@ function Stage2RoundView({ round, onClear }: { round: Stage2Round; onClear: () =
           </div>
         </div>
 
-        <div className="themed rounded-xl border accent-border bg-black/40 p-4">
+        <div className="themed rounded-xl border accent-border bg-sandDeep p-4">
           <div className="text-xs font-black uppercase tracking-wider accent-text">🧠 Brain Scanner</div>
           <div className="mt-3">
             <Gauge label='"DANGER" confidence' value={danger} mode="blood" threshold={round.threshold} />
           </div>
-          <div className="mt-3 space-y-1 font-mono text-sm text-white/50">
+          <div className="mt-3 space-y-1 font-mono text-sm text-umber/80">
             <div>base danger: {Math.round(round.base * 100)}%</div>
             {activeTokens.map((t) => {
               const m = t.weightModifiers.find((w) => w.targetSceneId === SCENE);
@@ -157,13 +157,13 @@ function Stage2RoundView({ round, onClear }: { round: Stage2Round; onClear: () =
                 </div>
               );
             })}
-            <div className="border-t border-white/20 pt-1 font-black text-white">= {Math.round(danger * 100)}% (clamped 0–100)</div>
+            <div className="border-t border-tan pt-1 font-black text-ink">= {Math.round(danger * 100)}% (clamped 0–100)</div>
           </div>
         </div>
       </div>
 
       <div>
-        <div className="mb-2 text-xs font-black uppercase tracking-wider text-white/50">
+        <div className="mb-2 text-xs font-black uppercase tracking-wider text-umber/70">
           🎒 Sticker tray {round.hideWeights ? "— effects hidden, experiment to learn them" : "— drag onto a slot, or click to pick up"}
         </div>
         <div className="flex flex-wrap gap-2">
@@ -191,15 +191,15 @@ function Stage2RoundView({ round, onClear }: { round: Stage2Round; onClear: () =
       {passed && (
         <Modal>
           <div className="text-4xl">🧪✨</div>
-          <h2 className="mt-2 font-display text-xl font-black accent-text">Round cleared: {Math.round(danger * 100)}% danger</h2>
-          <p className="mt-2 text-sm leading-relaxed">
+          <h2 className="mt-2 font-display text-xl font-black uppercase tracking-wide accent-text">Round cleared: {Math.round(danger * 100)}% danger</h2>
+          <p className="mt-2 text-sm leading-relaxed text-umber">
             {round.hideWeights
               ? "You inferred the hidden weights by experiment — that's exactly how people probe a model they can't see inside."
               : round.slotCount === 2
                 ? "With only two slots, you had to rank the features by importance and ignore the decoy. That's feature-importance thinking."
                 : "You changed the features, not the potion — and the model's sum dropped."}
           </p>
-          <button type="button" onClick={onClear} className="bg-brass mt-4 rounded-lg px-6 py-2.5 font-black uppercase tracking-wider text-ink hover:brightness-110">
+          <button type="button" onClick={onClear} className="bg-brass mt-4 rounded-full px-6 py-2.5 font-black uppercase tracking-wider text-ink hover:brightness-110">
             Continue →
           </button>
         </Modal>
